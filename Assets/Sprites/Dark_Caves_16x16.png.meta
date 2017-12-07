@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 74121406727fd9640b435e3007fe93f8
-timeCreated: 1512501370
-licenseType: Pro
+timeCreated: 1512660909
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Dark_Caves_16x16_0
@@ -214,9 +214,9 @@ TextureImporter:
       name: Dark_Caves_16x16_4
       rect:
         serializedVersion: 2
-        x: 64
+        x: 65
         y: 112
-        width: 16
+        width: 15
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
