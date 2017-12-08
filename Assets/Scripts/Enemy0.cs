@@ -22,6 +22,7 @@ public class Enemy0 : MonoBehaviour {
     private void FixedUpdate()
     {
         m_force = CalculateMovementForce(m_movementDist, m_timeToDist, m_rb.velocity.magnitude);
+        m_force = Mathf.Clamp(m_force, -1000f, 1000f);
         m_rb.AddForce(m_moveDirection * m_force);
 
         if(m_rb.velocity.magnitude < 0f)
