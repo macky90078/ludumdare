@@ -14,6 +14,7 @@ public class MultiPlayerGameManager : MonoBehaviour {
     [SerializeField] private GameObject m_wall0;
     [SerializeField] private GameObject m_wall1;
     [SerializeField] private GameObject m_enemy0;
+    [SerializeField] private GameObject m_seekerEnemy;
     [SerializeField] private GameObject m_PickUpObj;
     [SerializeField] private GameObject m_playerObj;
 
