@@ -388,10 +388,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93b33c1daf5e0534abfe32d09b300d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_totalPlayers: 4
+  m_totalPlayers: 2
   m_wall0: {fileID: 1038271243493400, guid: 7e6f006ce91946f4ab5669d89928b9cb, type: 2}
   m_wall1: {fileID: 1919359973962338, guid: c8461fb54ce8e1e4f8b73ddcd8e9b3d4, type: 2}
-  m_enemy0: {fileID: 1196310105194390, guid: 383a6280bb815c34b835d31bf5cef8b2, type: 2}
+  m_enemy0: {fileID: 1077197494245370, guid: e82f78c08577f3445bb068a48d13e23e, type: 2}
   m_PickUpObj: {fileID: 1459223005685392, guid: edf6960f1e9d786409a0f6129a86172c,
     type: 2}
   m_playerObj: {fileID: 0}

@@ -9,6 +9,7 @@ public class MultiPlayerGameManager : MonoBehaviour {
 
     private Vector2[] m_wallsPosition;
     private Vector2 m_wallSize;
+    private Hashtable m_entityScale;
 
     [SerializeField] private GameObject m_wall0;
     [SerializeField] private GameObject m_wall1;
@@ -21,11 +22,19 @@ public class MultiPlayerGameManager : MonoBehaviour {
     private AudioSource m_soundEffect;
 
     // Use this for initialization
-    void Start () {
-        m_wallsPosition = new Vector2[m_totalPlayers];
+    void Awake () {
+        //Set scale
+        m_entityScale = new Hashtable();
+        m_entityScale.Add(1, 1.0f);
+        m_entityScale.Add(2, 0.9f);
+        m_entityScale.Add(3, 0.7f);
+        m_entityScale.Add(4, 0.7f);
 
+        //Generate walls
+        m_wallsPosition = new Vector2[m_totalPlayers];
         GenerateWalls(m_totalPlayers);
 
+        //Generate pickups
         for(int i = 0; i < m_totalPlayers; i++)
         {
             GeneratePointsPickUp(i);
@@ -103,7 +112,7 @@ public class MultiPlayerGameManager : MonoBehaviour {
 
     public void GeneratePointsPickUp(int index)
     {
-        GameObject pickUp = m_PickUpObj;
+        GameObject pickUp;
 
         Vector3 position = new Vector3(
             m_wallsPosition[index].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
@@ -111,25 +120,28 @@ public class MultiPlayerGameManager : MonoBehaviour {
             0f
             );
         
-        Instantiate(pickUp, position, Quaternion.identity).GetComponent<MultiPlayerPointsPickUp>().SetIndex(index);
+        pickUp = Instantiate(m_PickUpObj, position, Quaternion.identity);
+        pickUp.GetComponent<MultiPlayerPointsPickUp>().SetIndex(index);
+        pickUp.transform.localScale = Vector3.Scale(pickUp.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
     }
 
     public void SpawnEnemy(int thisIndex)
     {
-        int otherIndex = thisIndex + 1;
+        GameObject enemy;
 
+        int otherIndex = thisIndex + 1;
         if(otherIndex == m_totalPlayers)
         {
             otherIndex = 0;
         }
 
-        GameObject enemy = m_enemy0;
         Vector3 position = new Vector3(
             m_wallsPosition[otherIndex].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
             m_wallsPosition[otherIndex].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2),
             0f
             );
         
-        Instantiate(enemy, position, m_enemy0.transform.rotation);
+        enemy = Instantiate(m_enemy0, position, m_enemy0.transform.rotation);
+        enemy.transform.localScale = Vector3.Scale(enemy.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
     }
 }
