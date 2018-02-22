@@ -17,8 +17,12 @@ public class MultiPlayerGameManager : MonoBehaviour {
     [SerializeField] private GameObject m_seekerEnemy;
     [SerializeField] private GameObject m_PickUpObj;
     [SerializeField] private GameObject m_playerObj;
+    [SerializeField] private GameObject m_cameraObj;
+
+    [HideInInspector] public bool m_playerDead = false;
 
     //Sounds
+    [SerializeField] private AudioClip m_DeathSound;
     private AudioSource m_music;
     private AudioSource m_soundEffect;
 
@@ -40,6 +44,10 @@ public class MultiPlayerGameManager : MonoBehaviour {
         {
             GeneratePointsPickUp(i);
         }
+
+        //Sounds
+        m_music = m_cameraObj.GetComponent<AudioSource>();
+        m_soundEffect = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -47,6 +55,13 @@ public class MultiPlayerGameManager : MonoBehaviour {
         if (Input.GetButtonDown("XboxStartButton"))
         {
             SceneManager.LoadScene(1, LoadSceneMode.Single);
+        }
+        if (m_playerDead)
+        {
+            m_music.Pause();
+            m_soundEffect.PlayOneShot(m_DeathSound);
+            m_playerObj.SetActive(false);
+            m_playerDead = false;
         }
     }
 

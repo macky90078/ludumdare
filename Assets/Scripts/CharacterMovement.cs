@@ -7,27 +7,45 @@ public class CharacterMovement : MonoBehaviour {
     [SerializeField] private float m_movementDist;
     [SerializeField] private float m_timeToDist;
 
+    [SerializeField] private bool m_bIsMultiplayer = false;
+    [SerializeField] private bool m_bIsSingleplayer = true;
+
     private float m_force;
     private float m_tarAngle;
 
     private Vector3 m_moveDirection;
 
-    [SerializeField] private GameObject m_gameManagerObj;
     private GameManager m_gameManager;
+    private MultiPlayerGameManager m_gameManagerMultiplayer;
 
     private Rigidbody2D m_rb;
 
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
-        m_gameManager = m_gameManagerObj.GetComponent<GameManager>();
+        if (m_bIsSingleplayer)
+        {
+            m_gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        }
+        if (m_bIsMultiplayer)
+        {
+            m_gameManagerMultiplayer = GameObject.FindGameObjectWithTag("GameManager").GetComponent<MultiPlayerGameManager>();
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Enemy0")
         {
-            m_gameManager.m_playerDead = true;
+            if (m_bIsSingleplayer)
+            {
+                m_gameManager.m_playerDead = true;
+            }
+            if(m_bIsMultiplayer)
+            {
+                m_gameManagerMultiplayer.m_playerDead = true;
+            }
         }
     }
 
