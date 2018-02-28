@@ -28,6 +28,9 @@ public class MultiPlayerGameManager : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        //set total player
+        m_totalPlayers = MenuManager.m_totalPlayer;
+
         //Set scale
         m_entityScale = new Hashtable();
         m_entityScale.Add(1, 1.0f);
@@ -54,7 +57,7 @@ public class MultiPlayerGameManager : MonoBehaviour {
 	void Update () {
         if (Input.GetButtonDown("XboxStartButton"))
         {
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
+            SceneManager.LoadScene(2, LoadSceneMode.Single);
         }
         if (m_playerDead)
         {

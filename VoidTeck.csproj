@@ -96,10 +96,12 @@
     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
     <Compile Include="Assets\Scripts\Enemy0.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\MultiPlayerGameManager.cs" />
     <Compile Include="Assets\Scripts\MultiPlayerPointsPickUp.cs" />
     <Compile Include="Assets\Scripts\PointsPickUp.cs" />
     <Compile Include="Assets\Scripts\SeekerEnemy.cs" />
+    <Compile Include="Assets\Scripts\SwitchCanvas.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

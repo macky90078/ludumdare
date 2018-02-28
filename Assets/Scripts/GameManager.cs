@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
 
         if (Input.GetButtonDown("XboxStartButton"))
         {
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
         }
 
 		if(m_spawnEnemy0)
