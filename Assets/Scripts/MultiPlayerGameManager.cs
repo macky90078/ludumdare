@@ -26,6 +26,9 @@ public class MultiPlayerGameManager : MonoBehaviour {
     private AudioSource m_music;
     private AudioSource m_soundEffect;
 
+    //UI
+    [SerializeField] private GameObject m_DeadScreen;
+
     // Use this for initialization
     void Awake () {
         //set total player
@@ -61,6 +64,21 @@ public class MultiPlayerGameManager : MonoBehaviour {
         }
         if (m_playerDead)
         {
+            if (!m_DeadScreen.transform.Find("1").gameObject.activeSelf)
+            {
+                m_DeadScreen.transform.Find("1").gameObject.SetActive(true);
+                m_DeadScreen.transform.Find("2").gameObject.SetActive(true);
+                if (m_totalPlayers == 3)
+                {
+                    m_DeadScreen.transform.Find("3").gameObject.SetActive(true);
+                }
+                else if (m_totalPlayers == 4)
+                {
+                    m_DeadScreen.transform.Find("3").gameObject.SetActive(true);
+                    m_DeadScreen.transform.Find("4").gameObject.SetActive(true);
+                }
+            }
+
             m_music.Pause();
             m_soundEffect.PlayOneShot(m_DeathSound);
             m_playerObj.SetActive(false);
