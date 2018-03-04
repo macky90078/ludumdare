@@ -12,6 +12,7 @@ public class CharacterMovement : MonoBehaviour {
     [SerializeField] private float m_dashMovementDist;
     [SerializeField] private float m_dashTimeToDist;
     [SerializeField] private float m_dashInvulnerableTime;
+    [SerializeField] private float m_effectRadius = 1;
 
     [SerializeField] private bool m_bIsMultiplayer = false;
     [SerializeField] private bool m_bIsSingleplayer = true;
@@ -68,10 +69,7 @@ public class CharacterMovement : MonoBehaviour {
         {
             m_bPlayerDashInput = true;
         }
-        else
-        {
-            m_bPlayerDashInput = false;
-        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -102,14 +100,14 @@ public class CharacterMovement : MonoBehaviour {
         {
             m_moveDirection = Quaternion.AngleAxis(m_tarAngle, Vector3.forward) * Vector3.right;
             m_moveforce = CalculateMovementForce(m_regMovementDist, m_regTimeToDist, m_rb.velocity.magnitude);
-            m_rb.AddForce(m_moveDirection * m_moveforce);
+            m_rb.AddForce(m_moveDirection.normalized * m_moveforce);
         }
 
         if(m_bPlayerDashInput)
         {
             m_dashForce = CalculateMovementForce(m_dashMovementDist, m_dashTimeToDist, m_rb.velocity.magnitude);
             StartCoroutine(Dashed(m_dashInvulnerableTime));
-            m_rb.AddForce(m_moveDirection * m_dashForce);
+            m_rb.AddForce(m_moveDirection.normalized * m_dashForce);
         }  
 
     }
@@ -137,9 +135,24 @@ public class CharacterMovement : MonoBehaviour {
     IEnumerator Dashed(float time)
     {
         m_bPlayerdashed = true;
+        m_bPlayerDashInput = false;
         GameObject dashParticle = Instantiate(m_gDashParticle, gameObject.transform.position, gameObject.transform.rotation);
         dashParticle.transform.parent = gameObject.transform;
+
+        Collider2D[] inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
+        foreach (Collider2D item in inRange)
+        {
+            Vector2 m_enemyDist = item.transform.position - transform.position;
+
+            if (item.GetComponent<Rigidbody2D>() && (item.CompareTag("Enemy0")))
+            {
+                item.attachedRigidbody.AddForce((m_enemyDist).normalized * m_dashForce);
+            }
+
+        }
+
         yield return new WaitForSeconds(time);
+
         Destroy(dashParticle);
         m_bPlayerdashed = false;
     }

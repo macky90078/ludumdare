@@ -5103,7 +5103,7 @@ Prefab:
     - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
         type: 2}
       propertyPath: m_iPlayerNumber
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
         type: 2}
@@ -5135,6 +5135,11 @@ Prefab:
       propertyPath: m_gDashParticle
       value: 
       objectReference: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 2}
+    - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
+        type: 2}
+      propertyPath: m_effectRadius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 61444523247366176, guid: 9371c5ee4e3afb740b76f6c8e888c3eb, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9371c5ee4e3afb740b76f6c8e888c3eb, type: 2}
@@ -9036,7 +9041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_scoreText: {fileID: 1908987602}
-  m_enemy0: {fileID: 1196310105194390, guid: 383a6280bb815c34b835d31bf5cef8b2, type: 2}
+  m_enemy0: {fileID: 1196310105194390, guid: 622d524d17c523b44aa1f3c0b4fac7bb, type: 2}
   m_PickUpObj: {fileID: 1837407943135024, guid: a7d0080b5b3ff22469087a4cc735a44f,
     type: 2}
   m_playerObj: {fileID: 1530820741}
