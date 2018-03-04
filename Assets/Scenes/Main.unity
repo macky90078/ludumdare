@@ -5100,6 +5100,41 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
+        type: 2}
+      propertyPath: m_iPlayerNumber
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
+        type: 2}
+      propertyPath: m_regMovementDist
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
+        type: 2}
+      propertyPath: m_regTimeToDist
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
+        type: 2}
+      propertyPath: m_dashMovementDist
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
+        type: 2}
+      propertyPath: m_dashTimeToDist
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
+        type: 2}
+      propertyPath: m_dashInvulnerableTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
+        type: 2}
+      propertyPath: m_gDashParticle
+      value: 
+      objectReference: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 2}
     m_RemovedComponents:
     - {fileID: 61444523247366176, guid: 9371c5ee4e3afb740b76f6c8e888c3eb, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9371c5ee4e3afb740b76f6c8e888c3eb, type: 2}

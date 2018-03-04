@@ -4,14 +4,30 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour {
 
-    [SerializeField] private float m_movementDist;
-    [SerializeField] private float m_timeToDist;
+    [SerializeField] private int m_iPlayerNumber;
+
+    [SerializeField] private float m_regMovementDist;
+    [SerializeField] private float m_regTimeToDist;
+
+    [SerializeField] private float m_dashMovementDist;
+    [SerializeField] private float m_dashTimeToDist;
+    [SerializeField] private float m_dashInvulnerableTime;
 
     [SerializeField] private bool m_bIsMultiplayer = false;
     [SerializeField] private bool m_bIsSingleplayer = true;
 
-    private float m_force;
+    [SerializeField] private GameObject m_gDashParticle;
+
+    private float m_moveforce;
+    private float m_dashForce;
+
+    private float m_horz;
+    private float m_vert;
     private float m_tarAngle;
+
+    private bool m_bPlayerMoveInput = false;
+    private bool m_bPlayerDashInput = false;
+    private bool m_bPlayerdashed = false;
 
     private Vector3 m_moveDirection;
 
@@ -34,35 +50,67 @@ public class CharacterMovement : MonoBehaviour {
 
     }
 
+    private void Update()
+    {
+        m_horz = InputManager.LeftHorizontal(m_iPlayerNumber);
+        m_vert = InputManager.LeftVertical(m_iPlayerNumber);
+
+        if (InputManager.LeftHorizontal(m_iPlayerNumber) != 0 || InputManager.LeftVertical(m_iPlayerNumber) != 0)
+        {
+            m_bPlayerMoveInput = true;
+        }
+        else
+        {
+            m_bPlayerMoveInput = false;
+        }
+
+        if (InputManager.AButton(m_iPlayerNumber))
+        {
+            m_bPlayerDashInput = true;
+        }
+        else
+        {
+            m_bPlayerDashInput = false;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Enemy0")
         {
-            if (m_bIsSingleplayer)
+            if (!m_bPlayerdashed)
             {
-                m_gameManager.m_playerDead = true;
-            }
-            if(m_bIsMultiplayer)
-            {
-                m_gameManagerMultiplayer.m_playerDead = true;
+                if (m_bIsSingleplayer)
+                {
+                    m_gameManager.m_playerDead = true;
+                }
+                if (m_bIsMultiplayer)
+                {
+                    m_gameManagerMultiplayer.m_playerDead = true;
+                    gameObject.SetActive(false);
+                }
             }
         }
     }
 
     private void FixedUpdate()
     {
-        float horz = Input.GetAxisRaw("Horizontal");
-        float vert = Input.GetAxisRaw("Vertical");
+        m_rb.velocity = new Vector2(Mathf.Clamp(m_rb.velocity.x, -75f, 75f), Mathf.Clamp(m_rb.velocity.y, -75f, 75f));
+        m_tarAngle = Mathf.Atan2(m_vert, m_horz) * Mathf.Rad2Deg;
 
-        m_tarAngle = Mathf.Atan2(vert, horz) * Mathf.Rad2Deg;
-
-        m_moveDirection = Quaternion.AngleAxis(m_tarAngle, Vector3.forward) * Vector3.right;      
-
-        if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        if (m_bPlayerMoveInput)
         {
-            m_force = CalculateMovementForce(m_movementDist, m_timeToDist, m_rb.velocity.magnitude);
-            m_rb.AddForce(m_moveDirection * m_force);
+            m_moveDirection = Quaternion.AngleAxis(m_tarAngle, Vector3.forward) * Vector3.right;
+            m_moveforce = CalculateMovementForce(m_regMovementDist, m_regTimeToDist, m_rb.velocity.magnitude);
+            m_rb.AddForce(m_moveDirection * m_moveforce);
         }
+
+        if(m_bPlayerDashInput)
+        {
+            m_dashForce = CalculateMovementForce(m_dashMovementDist, m_dashTimeToDist, m_rb.velocity.magnitude);
+            StartCoroutine(Dashed(m_dashInvulnerableTime));
+            m_rb.AddForce(m_moveDirection * m_dashForce);
+        }  
 
     }
 
@@ -84,5 +132,15 @@ public class CharacterMovement : MonoBehaviour {
     float CalculateForce(float mass, float acceleration)
     {
         return mass * acceleration;
+    }
+
+    IEnumerator Dashed(float time)
+    {
+        m_bPlayerdashed = true;
+        GameObject dashParticle = Instantiate(m_gDashParticle, gameObject.transform.position, gameObject.transform.rotation);
+        dashParticle.transform.parent = gameObject.transform;
+        yield return new WaitForSeconds(time);
+        Destroy(dashParticle);
+        m_bPlayerdashed = false;
     }
 }

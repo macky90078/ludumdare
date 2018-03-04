@@ -16,7 +16,6 @@ public class MultiPlayerGameManager : MonoBehaviour {
     [SerializeField] private GameObject m_enemy0;
     [SerializeField] private GameObject m_seekerEnemy;
     [SerializeField] private GameObject m_PickUpObj;
-    [SerializeField] private GameObject m_playerObj;
     [SerializeField] private GameObject m_cameraObj;
 
     [HideInInspector] public bool m_playerDead = false;
@@ -81,7 +80,6 @@ public class MultiPlayerGameManager : MonoBehaviour {
 
             m_music.Pause();
             m_soundEffect.PlayOneShot(m_DeathSound);
-            m_playerObj.SetActive(false);
             m_playerDead = false;
         }
     }
