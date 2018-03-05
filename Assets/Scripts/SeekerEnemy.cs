@@ -17,6 +17,8 @@ public class SeekerEnemy : MonoBehaviour
 
     private Vector3 m_moveDirection;
 
+    Collider2D[] inRange;
+
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
@@ -40,22 +42,31 @@ public class SeekerEnemy : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "DasherEnemy")
+        for (int i = 0; i < inRange.Length; i++)
         {
-            Destroy(gameObject);
+            if (collision.gameObject == inRange[i])
+            {
+                //m_evolutionManager.m_bouncersInRange.Remove(collision.gameObject);
+                m_evolutionManager.m_chasersInRange.Clear();
+                m_evolutionManager.m_chasersInRange.AddRange(inRange);
+                m_evolutionManager.m_chaserEvolveCount -= 1;
+            }
         }
     }
 
     private void EvolveIntoDasher()
     {
-        Collider2D[] inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
+        inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
+
         foreach (Collider2D item in inRange)
         {
             if (item.CompareTag("ChaserEnemy") && item.gameObject != gameObject && !m_hasIncrementEvolveCount)
             {
-                m_evolutionManager.m_chasersInRange.Add(gameObject);
+                //m_evolutionManager.m_chasersInRange.Add(gameObject);
+                m_evolutionManager.m_chasersInRange.Clear();
+                m_evolutionManager.m_chasersInRange.AddRange(inRange);
                 m_evolutionManager.m_chaserLastPos = transform;
                 m_evolutionManager.m_chaserEvolveCount += 1;
                 m_hasIncrementEvolveCount = true;

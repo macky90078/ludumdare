@@ -36,7 +36,10 @@ public class DasherEnemy : MonoBehaviour {
     {
         if(m_launchCount <=0 )
         {
-            LaunchAtPlayer();
+            if (m_target != null)
+            {
+                LaunchAtPlayer();
+            }
         }
     }
 

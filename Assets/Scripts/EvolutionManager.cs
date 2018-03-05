@@ -6,24 +6,27 @@ public class EvolutionManager : MonoBehaviour {
 
     // Variables for Bouncer into Chaser evolution
     [SerializeField] private GameObject m_chaserEnemy;
-     public List<GameObject> m_bouncersInRange;
-     public int m_bouncerEvolveCount = 0;
+    [HideInInspector] public List<Collider2D> m_bouncersInRange;
+    [HideInInspector] public int m_bouncerEvolveCount = 0;
     [HideInInspector] public Transform m_bouncerLastPos;
 
     // Variables for Chaser into Dasher evolution
     [SerializeField] private GameObject m_dasherEnemy;
-    [HideInInspector] public List<GameObject> m_chasersInRange;
+    [HideInInspector] public List<Collider2D> m_chasersInRange;
     [HideInInspector] public int m_chaserEvolveCount = 0;
     [HideInInspector] public Transform m_chaserLastPos;
 
     void Update ()
     {
         // Evolve Bouncer Into Chaser type enemy
-        if (m_bouncerEvolveCount >= 3)
+        if (m_bouncerEvolveCount >= 4)
         {
-            foreach (GameObject item in m_bouncersInRange)
+            foreach (Collider2D item in m_bouncersInRange)
             {
-                Destroy(item);
+                if (item.CompareTag("Enemy0"))
+                {
+                    Destroy(item.gameObject);
+                }
             }
             Instantiate(m_chaserEnemy, m_bouncerLastPos.position, m_bouncerLastPos.rotation);
             m_bouncerEvolveCount = 0;
@@ -32,11 +35,14 @@ public class EvolutionManager : MonoBehaviour {
         }
 
         // Evolve Chaser Into Dasher type enemy
-        if (m_chaserEvolveCount >= 3)
+        if (m_chaserEvolveCount >= 4)
         {
-            foreach(GameObject item in m_chasersInRange)
+            foreach(Collider2D item in m_chasersInRange)
             {
-                Destroy(item);
+                if (item.CompareTag("ChaserEnemy"))
+                {
+                    Destroy(item.gameObject);
+                }
             }
             Instantiate(m_dasherEnemy, m_chaserLastPos.position, m_chaserLastPos.rotation);
             m_chaserEvolveCount = 0;

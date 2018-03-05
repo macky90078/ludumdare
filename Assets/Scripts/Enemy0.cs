@@ -18,6 +18,8 @@ public class Enemy0 : MonoBehaviour {
 
     private Rigidbody2D m_rb;
 
+    Collider2D[] inRange;
+
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
@@ -30,6 +32,8 @@ public class Enemy0 : MonoBehaviour {
     private void Update()
     {
         EvolveIntoChaser();
+
+        //inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
     }
 
     private void FixedUpdate()
@@ -46,30 +50,53 @@ public class Enemy0 : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Enemy0" || collision.gameObject.tag == "ChaserEnemy")
+        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Enemy0" || collision.gameObject.tag == "ChaserEnemy" || collision.gameObject.tag == "DasherEnemy")
         {
             m_moveDirection = (m_moveDirection * -1) + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
         }
-        if(collision.gameObject.tag == "DasherEnemy")
+    }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Enemy0")
+    //    {
+    //        m_evolutionManager.m_bouncersInRange.Add(collision.gameObject);
+    //        m_evolutionManager.m_bouncerEvolveCount++;
+    //    }
+    //}
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        for (int i = 0; i < inRange.Length; i++)
         {
-            Destroy(gameObject);
+            if (collision.gameObject == inRange[i])
+            {
+                //m_evolutionManager.m_bouncersInRange.Remove(collision.gameObject);
+                m_evolutionManager.m_bouncersInRange.Clear();
+                m_evolutionManager.m_bouncersInRange.AddRange(inRange);
+                m_evolutionManager.m_bouncerEvolveCount -= 1;
+            }
         }
     }
 
     private void EvolveIntoChaser()
     {
-        Collider2D[] inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
+        inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
+
         foreach (Collider2D item in inRange)
         {
             if (item.CompareTag("Enemy0") && item.gameObject != gameObject && !m_hasIncrementEvolveCount)
             {
-                m_evolutionManager.m_bouncersInRange.Add(gameObject);
+                //m_evolutionManager.m_bouncersInRange.Add(gameObject);
+                m_evolutionManager.m_bouncersInRange.Clear();
+                m_evolutionManager.m_bouncersInRange.AddRange(inRange);
                 m_evolutionManager.m_bouncerLastPos = transform;
                 m_evolutionManager.m_bouncerEvolveCount += 1;
                 m_hasIncrementEvolveCount = true;
             }
             else if (!item.CompareTag("Enemy0") && item.gameObject != gameObject)
             {
+                //m_evolutionManager.m_bouncerEvolveCount -= 1;
                 m_hasIncrementEvolveCount = false;
             }
         }

@@ -5188,7 +5188,7 @@ Prefab:
     - target: {fileID: 114318977294251190, guid: 9371c5ee4e3afb740b76f6c8e888c3eb,
         type: 2}
       propertyPath: m_effectRadius
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 61444523247366176, guid: 9371c5ee4e3afb740b76f6c8e888c3eb, type: 2}
