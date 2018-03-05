@@ -9,17 +9,11 @@ public class SeekerEnemy : MonoBehaviour
     private Rigidbody2D m_rb;
 
     [SerializeField] private float m_force;
-    [SerializeField] private float m_effectRadius = 0.5f;
+    [SerializeField] private float m_effectRadius = 0.1f;
 
-    [SerializeField] Collider2D[] inRange;
+    private bool m_hasIncrementEvolveCount = false;
 
-    [SerializeField] private bool m_bIsMultiplayer = false;
-    [SerializeField] private bool m_bIsSingleplayer = true;
-
-    public bool m_hasIncrementEvolveCount = false;
-
-    private GameManager m_gameManager;
-    private MultiPlayerGameManager m_gameManagerMultiplayer;
+    private EvolutionManager m_evolutionManager;
 
     private Vector3 m_moveDirection;
 
@@ -27,14 +21,7 @@ public class SeekerEnemy : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody2D>();
 
-        if (m_bIsSingleplayer)
-        {
-            m_gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        }
-        if (m_bIsMultiplayer)
-        {
-            m_gameManagerMultiplayer = GameObject.FindGameObjectWithTag("GameManager").GetComponent<MultiPlayerGameManager>();
-        }
+        m_evolutionManager = GameObject.FindGameObjectWithTag("EvolutionManager").GetComponent<EvolutionManager>();
 
         m_target = GameObject.FindGameObjectWithTag("Player");
     }
@@ -63,17 +50,19 @@ public class SeekerEnemy : MonoBehaviour
 
     private void EvolveIntoDasher()
     {
-        inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
+        Collider2D[] inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
         foreach (Collider2D item in inRange)
         {
             if (item.CompareTag("ChaserEnemy") && item.gameObject != gameObject && !m_hasIncrementEvolveCount)
             {
-                m_gameManager.m_evolveCount += 1;
+                m_evolutionManager.m_chasersInRange.Add(gameObject);
+                m_evolutionManager.m_chaserLastPos = transform;
+                m_evolutionManager.m_chaserEvolveCount += 1;
                 m_hasIncrementEvolveCount = true;
             }
-            if (m_gameManager.m_evolveCount >= 3)
+            else if(!item.CompareTag("ChaserEnemy") && item.gameObject != gameObject)
             {
-                Destroy(gameObject);
+                m_hasIncrementEvolveCount = false;
             }
         }
     }

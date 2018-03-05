@@ -9,6 +9,7 @@ TagManager:
   - GameManager
   - DasherEnemy
   - ChaserEnemy
+  - EvolutionManager
   layers:
   - Default
   - TransparentFX

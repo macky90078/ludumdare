@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject m_enemyChaser;
     [SerializeField] private GameObject m_PickUpObj;
     [SerializeField] private GameObject m_playerObj;
-    [SerializeField] private GameObject m_DasherEnemy;
 
     [SerializeField] private GameObject m_cameraObj;
     private AudioSource m_music;
@@ -26,7 +25,6 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public bool m_spawnPickUp = false;
     [HideInInspector] public bool m_playerDead = false;
 
-    public int m_evolveCount = 0;
 
     private int m_enemySpawnCount = 0;
 
@@ -48,23 +46,23 @@ public class GameManager : MonoBehaviour {
 
 		if(m_spawnEnemy)
         {
-            m_enemySpawnCount += 1;
+            //m_enemySpawnCount += 1;
 
-            if(m_enemySpawnCount <= 2)
-            {
+            //if(m_enemySpawnCount <= 2)
+            //{
                 Vector3 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
                 GameObject enemy = m_enemyBouncer;
                 Instantiate(enemy, position, m_enemyBouncer.transform.rotation);
                 m_spawnEnemy = false;
-            }
-            if (m_enemySpawnCount >= 3)
-            {
-                Vector3 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
-                GameObject enemy = m_enemyChaser;
-                Instantiate(enemy, position, m_enemyChaser.transform.rotation);
-                m_enemySpawnCount = 0;
-                m_spawnEnemy = false;
-            }
+            //}
+            //if (m_enemySpawnCount >= 3)
+            //{
+            //    Vector3 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
+            //    GameObject enemy = m_enemyChaser;
+            //    Instantiate(enemy, position, m_enemyChaser.transform.rotation);
+            //    m_enemySpawnCount = 0;
+            //    m_spawnEnemy = false;
+            //}
 
         }
         if(m_spawnPickUp)
@@ -81,12 +79,6 @@ public class GameManager : MonoBehaviour {
             m_soundEffect.PlayOneShot(m_DeathSound);
             m_playerObj.SetActive(false);
             m_playerDead = false;
-        }
-
-        if(m_evolveCount >= 3)
-        {
-            Instantiate(m_DasherEnemy, m_DasherEnemy.transform.position, m_DasherEnemy.transform.rotation);
-            m_evolveCount = 0;
         }
     }
 }

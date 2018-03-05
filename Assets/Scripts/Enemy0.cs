@@ -6,6 +6,11 @@ public class Enemy0 : MonoBehaviour {
 
     [SerializeField] private float m_movementDist;
     [SerializeField] private float m_timeToDist;
+    [SerializeField] private float m_effectRadius = 0.1f;
+
+    private bool m_hasIncrementEvolveCount = false;
+
+    private EvolutionManager m_evolutionManager;
 
     private float m_force;
 
@@ -16,7 +21,15 @@ public class Enemy0 : MonoBehaviour {
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
+
+        m_evolutionManager = GameObject.FindGameObjectWithTag("EvolutionManager").GetComponent<EvolutionManager>();
+
         m_moveDirection = Quaternion.AngleAxis(Random.Range(0, 360), Vector3.forward) * Vector3.right;
+    }
+
+    private void Update()
+    {
+        EvolveIntoChaser();
     }
 
     private void FixedUpdate()
@@ -40,6 +53,25 @@ public class Enemy0 : MonoBehaviour {
         if(collision.gameObject.tag == "DasherEnemy")
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void EvolveIntoChaser()
+    {
+        Collider2D[] inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
+        foreach (Collider2D item in inRange)
+        {
+            if (item.CompareTag("Enemy0") && item.gameObject != gameObject && !m_hasIncrementEvolveCount)
+            {
+                m_evolutionManager.m_bouncersInRange.Add(gameObject);
+                m_evolutionManager.m_bouncerLastPos = transform;
+                m_evolutionManager.m_bouncerEvolveCount += 1;
+                m_hasIncrementEvolveCount = true;
+            }
+            else if (!item.CompareTag("Enemy0") && item.gameObject != gameObject)
+            {
+                m_hasIncrementEvolveCount = false;
+            }
         }
     }
 

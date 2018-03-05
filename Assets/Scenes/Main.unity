@@ -110,6 +110,56 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &6970707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 6970709}
+  - component: {fileID: 6970708}
+  m_Layer: 0
+  m_Name: EvolutionManager
+  m_TagString: EvolutionManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &6970708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 6970707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0874461dbdd53ca40a5f3986933f3bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_chaserEnemy: {fileID: 1910310554809202, guid: f64ac7386773f434ca77875b05684b54,
+    type: 2}
+  m_bouncersInRange: []
+  m_bouncerEvolveCount: 0
+  m_bouncerLastPos: {fileID: 0}
+  m_dasherEnemy: {fileID: 1888924686314270, guid: d93b7154219f221418febf73afbcecc3,
+    type: 2}
+  m_chasersInRange: []
+  m_chaserEvolveCount: 0
+  m_chaserLastPos: {fileID: 0}
+--- !u!4 &6970709
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 6970707}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &24579042
 GameObject:
   m_ObjectHideFlags: 0
@@ -9048,15 +9098,12 @@ MonoBehaviour:
   m_PickUpObj: {fileID: 1837407943135024, guid: a7d0080b5b3ff22469087a4cc735a44f,
     type: 2}
   m_playerObj: {fileID: 1530820741}
-  m_DasherEnemy: {fileID: 1888924686314270, guid: d93b7154219f221418febf73afbcecc3,
-    type: 2}
   m_cameraObj: {fileID: 1036732941}
   m_DeathSound: {fileID: 8300000, guid: 6fd7612aa8b7fdf4eaab200a3b44a1b9, type: 3}
   m_playerPoints: 0
   m_spawnEnemy: 0
   m_spawnPickUp: 0
   m_playerDead: 0
-  m_evolveCount: 0
 --- !u!82 &1757743500
 AudioSource:
   m_ObjectHideFlags: 0
