@@ -7,9 +7,9 @@ public class Enemy0 : MonoBehaviour {
     [SerializeField] private float m_movementDist;
     [SerializeField] private float m_timeToDist;
 
-    public float m_force;
+    private float m_force;
 
-    public Vector3 m_moveDirection;
+    private Vector3 m_moveDirection;
 
     private Rigidbody2D m_rb;
 
@@ -33,9 +33,13 @@ public class Enemy0 : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Enemy0")
+        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Enemy0" || collision.gameObject.tag == "ChaserEnemy")
         {
             m_moveDirection = (m_moveDirection * -1) + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
+        }
+        if(collision.gameObject.tag == "DasherEnemy")
+        {
+            Destroy(gameObject);
         }
     }
 

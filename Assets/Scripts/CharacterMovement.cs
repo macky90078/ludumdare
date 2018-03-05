@@ -74,7 +74,7 @@ public class CharacterMovement : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy0")
+        if(collision.gameObject.tag == "Enemy0" || collision.gameObject.tag == "DasherEnemy" || collision.gameObject.tag == "ChaserEnemy")
         {
             if (!m_bPlayerdashed)
             {
@@ -144,7 +144,7 @@ public class CharacterMovement : MonoBehaviour {
         {
             Vector2 m_enemyDist = item.transform.position - transform.position;
 
-            if (item.GetComponent<Rigidbody2D>() && (item.CompareTag("Enemy0")))
+            if (item.GetComponent<Rigidbody2D>() && ((item.CompareTag("Enemy0") || item.CompareTag("DasherEnemy") || item.CompareTag("ChaserEnemy"))))
             {
                 item.attachedRigidbody.AddForce((m_enemyDist).normalized * m_dashForce);
             }

@@ -4954,7 +4954,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2ca1d4710d9d1b944aeab06d667885a1, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.026
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -9041,16 +9041,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_scoreText: {fileID: 1908987602}
-  m_enemy0: {fileID: 1196310105194390, guid: 622d524d17c523b44aa1f3c0b4fac7bb, type: 2}
+  m_enemyBouncer: {fileID: 1196310105194390, guid: 622d524d17c523b44aa1f3c0b4fac7bb,
+    type: 2}
+  m_enemyChaser: {fileID: 1910310554809202, guid: f64ac7386773f434ca77875b05684b54,
+    type: 2}
   m_PickUpObj: {fileID: 1837407943135024, guid: a7d0080b5b3ff22469087a4cc735a44f,
     type: 2}
   m_playerObj: {fileID: 1530820741}
+  m_DasherEnemy: {fileID: 1888924686314270, guid: d93b7154219f221418febf73afbcecc3,
+    type: 2}
   m_cameraObj: {fileID: 1036732941}
   m_DeathSound: {fileID: 8300000, guid: 6fd7612aa8b7fdf4eaab200a3b44a1b9, type: 3}
   m_playerPoints: 0
-  m_spawnEnemy0: 0
+  m_spawnEnemy: 0
   m_spawnPickUp: 0
   m_playerDead: 0
+  m_evolveCount: 0
 --- !u!82 &1757743500
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9062,7 +9068,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6fd7612aa8b7fdf4eaab200a3b44a1b9, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.014
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -21,7 +21,7 @@ public class PointsPickUp : MonoBehaviour {
         {
             m_gameManager.m_playerPoints += m_pointsAmount;
             m_gameManager.m_spawnPickUp = true;
-            m_gameManager.m_spawnEnemy0 = true;
+            m_gameManager.m_spawnEnemy = true;
             Destroy(gameObject);
         }
     }
