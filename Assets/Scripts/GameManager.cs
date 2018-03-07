@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject m_PickUpObj;
     [SerializeField] private GameObject m_playerObj;
 
+    private GameObject m_playerInScene;
+
     [SerializeField] private GameObject m_cameraObj;
     private AudioSource m_music;
 
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour {
     {
         m_music = m_cameraObj.GetComponent<AudioSource>();
         m_soundEffect = GetComponent<AudioSource>();
+        m_playerInScene = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update ()
@@ -46,29 +49,23 @@ public class GameManager : MonoBehaviour {
 
 		if(m_spawnEnemy)
         {
-            //m_enemySpawnCount += 1;
-
-            //if(m_enemySpawnCount <= 2)
-            //{
-                Vector3 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
-                GameObject enemy = m_enemyBouncer;
-                Instantiate(enemy, position, m_enemyBouncer.transform.rotation);
-                m_spawnEnemy = false;
-            //}
-            //if (m_enemySpawnCount >= 3)
-            //{
-            //    Vector3 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
-            //    GameObject enemy = m_enemyChaser;
-            //    Instantiate(enemy, position, m_enemyChaser.transform.rotation);
-            //    m_enemySpawnCount = 0;
-            //    m_spawnEnemy = false;
-            //}
-
+            Vector3 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
+            if(Vector2.Distance(position, m_playerInScene.transform.position) < 1)
+            {
+                position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
+            }
+            GameObject enemy = m_enemyBouncer;
+            Instantiate(enemy, position, m_enemyBouncer.transform.rotation);
+            m_spawnEnemy = false;
         }
         if(m_spawnPickUp)
         {
             m_music.pitch += 0.02f;
             Vector3 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
+            if (Vector2.Distance(position, m_playerInScene.transform.position) < 1)
+            {
+                position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
+            }
             GameObject pickUp = m_PickUpObj;
             Instantiate(pickUp, position, m_enemyBouncer.transform.rotation);
             m_spawnPickUp = false;
