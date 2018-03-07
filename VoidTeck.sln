@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoidTeck", "VoidTeck.csproj", "{2F982B8F-867A-F80B-1C85-A8D03D7891CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoidTeck.Editor", "VoidTeck.Editor.csproj", "{04B5DBC6-A651-76F9-4903-5D40178D6509}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{2F982B8F-867A-F80B-1C85-A8D03D7891CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F982B8F-867A-F80B-1C85-A8D03D7891CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F982B8F-867A-F80B-1C85-A8D03D7891CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B5DBC6-A651-76F9-4903-5D40178D6509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04B5DBC6-A651-76F9-4903-5D40178D6509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B5DBC6-A651-76F9-4903-5D40178D6509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04B5DBC6-A651-76F9-4903-5D40178D6509}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

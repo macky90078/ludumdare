@@ -156,4 +156,9 @@ public class CharacterMovement : MonoBehaviour {
         Destroy(dashParticle);
         m_bPlayerdashed = false;
     }
+
+    public void setPlayerNumber(int id)
+    {
+        m_iPlayerNumber = id;
+    }
 }

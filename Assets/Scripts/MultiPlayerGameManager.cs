@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class MultiPlayerGameManager : MonoBehaviour {
 
     public int m_totalPlayers;
+    public int m_testTotalPlayer;
 
     private Vector2[] m_wallsPosition;
     private Vector2 m_wallSize;
     private Hashtable m_entityScale;
 
+    [SerializeField] private GameObject m_player;
     [SerializeField] private GameObject m_wall0;
     [SerializeField] private GameObject m_wall1;
     [SerializeField] private GameObject m_enemy0;
@@ -31,7 +33,15 @@ public class MultiPlayerGameManager : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         //set total player
-        m_totalPlayers = MenuManager.m_totalPlayer;
+        //For test, add test total player.
+        if (m_testTotalPlayer == 0)
+        {
+            m_totalPlayers = MenuManager.m_totalPlayer;
+        }
+        else
+        {
+            m_totalPlayers = m_testTotalPlayer;
+        }
 
         //Set scale
         m_entityScale = new Hashtable();
@@ -43,6 +53,22 @@ public class MultiPlayerGameManager : MonoBehaviour {
         //Generate walls
         m_wallsPosition = new Vector2[m_totalPlayers];
         GenerateWalls(m_totalPlayers);
+
+        //Generate players
+        for(int i = 0; i<m_totalPlayers; i++)
+        {
+            GameObject player;
+
+            Vector3 position = new Vector3(
+                m_wallsPosition[i].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
+                m_wallsPosition[i].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2),
+                0f
+                );
+
+            player = Instantiate(m_player, position, Quaternion.identity);
+            player.GetComponent<CharacterMovement>().setPlayerNumber(i+1);
+            player.transform.localScale = Vector3.Scale(player.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
+        }
 
         //Generate pickups
         for(int i = 0; i < m_totalPlayers; i++)
