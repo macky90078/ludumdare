@@ -67,6 +67,9 @@ public class MultiPlayerGameManager : MonoBehaviour {
 
             player = Instantiate(m_player, position, Quaternion.identity);
             player.GetComponent<CharacterMovement>().setPlayerNumber(i+1);
+            player.GetComponent<CharacterMovement>().m_bIsSingleplayer = false;
+            player.GetComponent<CharacterMovement>().m_bIsMultiplayer = true;
+            player.GetComponent<CharacterMovement>().m_gameManagerMultiplayer = this;
             player.transform.localScale = Vector3.Scale(player.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
         }
 
@@ -185,6 +188,7 @@ public class MultiPlayerGameManager : MonoBehaviour {
         pickUp.GetComponent<MultiPlayerPointsPickUp>().SetIndex(index);
         pickUp.transform.localScale = Vector3.Scale(pickUp.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
     }
+
 
     public void SpawnEnemy(int thisIndex)
     {

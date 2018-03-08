@@ -14,8 +14,8 @@ public class CharacterMovement : MonoBehaviour {
     [SerializeField] private float m_dashInvulnerableTime;
     [SerializeField] private float m_effectRadius = 1;
 
-    [SerializeField] private bool m_bIsMultiplayer = false;
-    [SerializeField] private bool m_bIsSingleplayer = true;
+    public bool m_bIsMultiplayer = false;
+    public bool m_bIsSingleplayer = true;
 
     [SerializeField] private GameObject m_gDashParticle;
 
@@ -33,7 +33,7 @@ public class CharacterMovement : MonoBehaviour {
     private Vector3 m_moveDirection;
 
     private GameManager m_gameManager;
-    private MultiPlayerGameManager m_gameManagerMultiplayer;
+    public MultiPlayerGameManager m_gameManagerMultiplayer;
 
     private Rigidbody2D m_rb;
 
