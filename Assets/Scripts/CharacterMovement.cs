@@ -92,7 +92,7 @@ public class CharacterMovement : MonoBehaviour {
                 }
                 if (m_bIsMultiplayer)
                 {
-                    m_gameManagerMultiplayer.m_playerDead = true;
+                    m_gameManagerMultiplayer.PlayerDie(m_iPlayerNumber);
                     gameObject.SetActive(false);
                 }
             }

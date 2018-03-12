@@ -10,7 +10,7 @@ public class DasherEnemy : MonoBehaviour {
     private float m_movementDist;
     private float m_force;
 
-    private GameObject m_target;
+    public GameObject m_target;
 
     private AudioSource m_soundEffect;
     [SerializeField] private AudioClip m_spawnSound;

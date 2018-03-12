@@ -21,6 +21,7 @@ public class MultiPlayerPointsPickUp : MonoBehaviour {
         {
             m_gameManager.GeneratePointsPickUp(m_index);
             m_gameManager.SpawnEnemy(m_index);
+            m_gameManager.addScore(m_index, m_pointsAmount);
             Destroy(gameObject);
         }
     }

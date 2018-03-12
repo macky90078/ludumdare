@@ -13,7 +13,7 @@ public class SeekerEnemy : MonoBehaviour
 
     private Vector3 m_moveDirection;
 
-    private GameObject m_target;
+    public GameObject m_target;
 
     private AudioSource m_soundEffect;
     [SerializeField] private AudioClip m_SpawnSound;
@@ -92,7 +92,5 @@ public class SeekerEnemy : MonoBehaviour
 
         return direction.normalized;
     }
-
-
 }
 
