@@ -65,7 +65,7 @@ public class CharacterMovement : MonoBehaviour {
             m_bPlayerMoveInput = false;
         }
 
-        if (InputManager.AButton(m_iPlayerNumber))
+        if (InputManager.AButton(m_iPlayerNumber) || Input.GetKeyDown(KeyCode.Space))
         {
             m_bPlayerDashInput = true;
         }

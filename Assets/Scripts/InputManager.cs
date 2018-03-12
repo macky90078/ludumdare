@@ -10,7 +10,7 @@ public class InputManager
     {
         float r = 0.0f;
         r += Input.GetAxis("J" + playerNumber + "LeftHorizontal");
-        //r += Input.GetAxis("K" + playerNumber + "MainHorizontal");
+        r += Input.GetAxis("K" + playerNumber + "MainHorizontal");
         return Mathf.Clamp(r, -1.0f, 1.0f);
     }
 
@@ -18,7 +18,7 @@ public class InputManager
     {
         float r = 0.0f;
         r += Input.GetAxis("J" + playerNumber + "LeftVertical");
-        //r += Input.GetAxis("K" + playerNumber + "MainVertical");
+        r += Input.GetAxis("K" + playerNumber + "MainVertical");
         return Mathf.Clamp(r, -1.0f, 1.0f);
     }
 

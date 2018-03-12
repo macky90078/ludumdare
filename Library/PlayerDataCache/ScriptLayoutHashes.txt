@@ -146,8 +146,8 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
 306096b0b408fa60c500aec1fcbab4e8 Assembly-CSharp.dll:.MenuManager
 53c676bd4b538d6039dd3ab8d1aea50a Assembly-CSharp.dll:.EvolutionManager
-018fd9c258e3215bdfe84ca35ea63e25 Assembly-CSharp.dll:.MultiPlayerGameManager
+6afe2d5aee5085bb4beeb28075833c8c Assembly-CSharp.dll:.MultiPlayerGameManager
 355a9acbee2a40dec094355d58792be2 Assembly-CSharp.dll:.PointsPickUp
 6fb7e1be716963a0c08757e17b011a9d Assembly-CSharp.dll:.CFX_Demo_RandomDirectionTranslate
-6ec4ace12b31a695d29bdcb7a854f291 Assembly-CSharp.dll:.CharacterMovement
+bab29040a0198177f40fdd87804edb1e Assembly-CSharp.dll:.CharacterMovement
 11cbb7ccc952173a4ea9fa767a9eb75f Assembly-CSharp.dll:.SwitchCanvas
