@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class SeekerEnemy : MonoBehaviour
 {
-    private GameObject m_target;
-
-    private Rigidbody2D m_rb;
-
     [SerializeField] private float m_force;
     [SerializeField] private float m_effectRadius = 0.1f;
 
@@ -17,6 +13,13 @@ public class SeekerEnemy : MonoBehaviour
 
     private Vector3 m_moveDirection;
 
+    private GameObject m_target;
+
+    private AudioSource m_soundEffect;
+    [SerializeField] private AudioClip m_SpawnSound;
+
+    private Rigidbody2D m_rb;
+
     Collider2D[] inRange;
 
     private void Awake()
@@ -25,7 +28,11 @@ public class SeekerEnemy : MonoBehaviour
 
         m_evolutionManager = GameObject.FindGameObjectWithTag("EvolutionManager").GetComponent<EvolutionManager>();
 
+        m_soundEffect = GetComponent<AudioSource>();
+        m_soundEffect.PlayOneShot(m_SpawnSound);
+
         m_target = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     private void Update()
@@ -85,5 +92,7 @@ public class SeekerEnemy : MonoBehaviour
 
         return direction.normalized;
     }
+
+
 }
 

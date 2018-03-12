@@ -14,6 +14,9 @@ public class CharacterMovement : MonoBehaviour {
     [SerializeField] private float m_dashInvulnerableTime;
     [SerializeField] private float m_effectRadius = 1;
 
+    [SerializeField] private float m_pushMovementDist;
+    [SerializeField] private float m_pushTimeToDist;
+
     public bool m_bIsMultiplayer = false;
     public bool m_bIsSingleplayer = true;
 
@@ -30,6 +33,9 @@ public class CharacterMovement : MonoBehaviour {
     private bool m_bPlayerDashInput = false;
     private bool m_bPlayerdashed = false;
 
+    private AudioSource m_soundEffect;
+    [SerializeField] private AudioClip m_dashSound;
+
     private Vector3 m_moveDirection;
 
     private GameManager m_gameManager;
@@ -40,6 +46,7 @@ public class CharacterMovement : MonoBehaviour {
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
+        m_soundEffect = GetComponent<AudioSource>();
         if (m_bIsSingleplayer)
         {
             m_gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -68,6 +75,7 @@ public class CharacterMovement : MonoBehaviour {
         if (InputManager.AButton(m_iPlayerNumber) || Input.GetKeyDown(KeyCode.Space))
         {
             m_bPlayerDashInput = true;
+            m_soundEffect.PlayOneShot(m_dashSound);
         }
 
     }
@@ -144,11 +152,17 @@ public class CharacterMovement : MonoBehaviour {
         {
             Vector2 m_enemyDist = item.transform.position - transform.position;
 
-            if (item.GetComponent<Rigidbody2D>() && ((item.CompareTag("Enemy0") || item.CompareTag("DasherEnemy") || item.CompareTag("ChaserEnemy"))))
+            if (item.GetComponent<Rigidbody2D>() && ((item.CompareTag("DasherEnemy") || item.CompareTag("ChaserEnemy"))))
             {
-                item.attachedRigidbody.AddForce((m_enemyDist).normalized * m_dashForce);
+                float pushEnemyForce = CalculateMovementForce(m_pushMovementDist, m_pushTimeToDist, item.attachedRigidbody.velocity.magnitude);
+                item.attachedRigidbody.AddForce((m_enemyDist).normalized * pushEnemyForce);
             }
-
+            else if (item.GetComponent<Rigidbody2D>() && ((item.CompareTag("Enemy0"))))
+            {
+                float pushEnemyForce = CalculateMovementForce(m_pushMovementDist, m_pushTimeToDist, item.attachedRigidbody.velocity.magnitude);
+                item.GetComponent<Enemy0>().m_moveDirection = (item.GetComponent<Enemy0>().m_moveDirection * -1);
+                item.attachedRigidbody.AddForce((m_enemyDist).normalized * pushEnemyForce);
+            }
         }
 
         yield return new WaitForSeconds(time);

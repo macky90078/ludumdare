@@ -12,6 +12,9 @@ public class DasherEnemy : MonoBehaviour {
 
     private GameObject m_target;
 
+    private AudioSource m_soundEffect;
+    [SerializeField] private AudioClip m_spawnSound;
+
     private Rigidbody2D m_rb;
 
     private Vector2 m_relativePos;
@@ -19,6 +22,10 @@ public class DasherEnemy : MonoBehaviour {
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
+
+        m_soundEffect = GetComponent<AudioSource>();
+        m_soundEffect.PlayOneShot(m_spawnSound);
+
         m_target = GameObject.FindGameObjectWithTag("Player");
     }
 

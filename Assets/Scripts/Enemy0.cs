@@ -14,7 +14,7 @@ public class Enemy0 : MonoBehaviour {
 
     private float m_force;
 
-    private Vector3 m_moveDirection;
+    [HideInInspector] public Vector3 m_moveDirection;
 
     private Rigidbody2D m_rb;
 
@@ -32,8 +32,6 @@ public class Enemy0 : MonoBehaviour {
     private void Update()
     {
         EvolveIntoChaser();
-
-        //inRange = Physics2D.OverlapCircleAll(transform.position, m_effectRadius);
     }
 
     private void FixedUpdate()
@@ -56,22 +54,12 @@ public class Enemy0 : MonoBehaviour {
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Enemy0")
-    //    {
-    //        m_evolutionManager.m_bouncersInRange.Add(collision.gameObject);
-    //        m_evolutionManager.m_bouncerEvolveCount++;
-    //    }
-    //}
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         for (int i = 0; i < inRange.Length; i++)
         {
             if (collision.gameObject == inRange[i])
             {
-                //m_evolutionManager.m_bouncersInRange.Remove(collision.gameObject);
                 m_evolutionManager.m_bouncersInRange.Clear();
                 m_evolutionManager.m_bouncersInRange.AddRange(inRange);
                 m_evolutionManager.m_bouncerEvolveCount -= 1;
@@ -87,7 +75,6 @@ public class Enemy0 : MonoBehaviour {
         {
             if (item.CompareTag("Enemy0") && item.gameObject != gameObject && !m_hasIncrementEvolveCount)
             {
-                //m_evolutionManager.m_bouncersInRange.Add(gameObject);
                 m_evolutionManager.m_bouncersInRange.Clear();
                 m_evolutionManager.m_bouncersInRange.AddRange(inRange);
                 m_evolutionManager.m_bouncerLastPos = transform;
@@ -96,7 +83,6 @@ public class Enemy0 : MonoBehaviour {
             }
             else if (!item.CompareTag("Enemy0") && item.gameObject != gameObject)
             {
-                //m_evolutionManager.m_bouncerEvolveCount -= 1;
                 m_hasIncrementEvolveCount = false;
             }
         }

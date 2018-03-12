@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private Text m_scoreText;
 
     [SerializeField] private GameObject m_enemyBouncer;
-    [SerializeField] private GameObject m_enemyChaser;
     [SerializeField] private GameObject m_PickUpObj;
     [SerializeField] private GameObject m_playerObj;
 
@@ -50,7 +49,7 @@ public class GameManager : MonoBehaviour {
 		if(m_spawnEnemy)
         {
             Vector3 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
-            if(Vector2.Distance(position, m_playerInScene.transform.position) < 1)
+            if(Vector2.Distance(position, m_playerInScene.transform.position) < 1.5f)
             {
                 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
             }
