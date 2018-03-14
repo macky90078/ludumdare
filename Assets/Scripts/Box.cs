@@ -19,20 +19,27 @@ public class Box : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        //Apply scale
         other.gameObject.transform.localScale = Vector3.Scale(other.transform.localScale, new Vector3(m_scale, m_scale, m_scale));
 
-        //Set player
+        //player
         if (other.tag == "Player")
         {
             m_player = other.gameObject;
+            other.gameObject.GetComponent<CharacterMovement>().ScaleRegTimeToDist(1.1f / m_scale);
         }
 
-        //Set target
-        if(other.tag == "ChaserEnemy")
+        //Enemy
+        if(other.tag == "Enemy0")
+        {
+            other.gameObject.GetComponent<Enemy0>().ScaleTimeToDist(1.1f / m_scale);
+        }
+        else if (other.tag == "ChaserEnemy")
         {
             other.gameObject.GetComponent<SeekerEnemy>().m_target = m_player;
+            other.gameObject.GetComponent<SeekerEnemy>().ScaleForce(m_scale);
         }
-        if (other.tag == "DasherEnemy")
+        else if (other.tag == "DasherEnemy")
         {
             other.gameObject.GetComponent<DasherEnemy>().m_target = m_player;
         }

@@ -92,5 +92,10 @@ public class SeekerEnemy : MonoBehaviour
 
         return direction.normalized;
     }
+
+    public void ScaleForce(float scale)
+    {
+        m_force *= scale;
+    }
 }
 

@@ -220,7 +220,7 @@ public class MultiPlayerGameManager : MonoBehaviour {
         
         pickUp = Instantiate(m_PickUpObj, position, Quaternion.identity);
         pickUp.GetComponent<MultiPlayerPointsPickUp>().SetIndex(index);
-        //pickUp.transform.localScale = Vector3.Scale(pickUp.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
+        pickUp.transform.localScale = Vector3.Scale(pickUp.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
     }
 
 

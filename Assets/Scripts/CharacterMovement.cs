@@ -175,4 +175,9 @@ public class CharacterMovement : MonoBehaviour {
     {
         m_iPlayerNumber = id;
     }
+
+    public void ScaleRegTimeToDist(float scale)
+    {
+        m_regTimeToDist *= scale;
+    }
 }

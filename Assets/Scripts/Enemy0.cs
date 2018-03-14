@@ -107,4 +107,9 @@ public class Enemy0 : MonoBehaviour {
     {
         return mass * acceleration;
     }
+
+    public void ScaleTimeToDist(float scale)
+    {
+        m_timeToDist *= scale;
+    }
 }
