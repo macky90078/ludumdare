@@ -53,9 +53,12 @@ public class GameManager : MonoBehaviour {
             {
                 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
             }
-            GameObject enemy = m_enemyBouncer;
-            Instantiate(enemy, position, m_enemyBouncer.transform.rotation);
-            m_spawnEnemy = false;
+            if(Vector2.Distance(position, m_playerInScene.transform.position) > 1.5f)
+            {
+                GameObject enemy = m_enemyBouncer;
+                Instantiate(enemy, position, m_enemyBouncer.transform.rotation);
+                m_spawnEnemy = false;
+            }
         }
         if(m_spawnPickUp)
         {
@@ -65,9 +68,12 @@ public class GameManager : MonoBehaviour {
             {
                 position = new Vector3(Random.Range(-3.2f, 3.2f), Random.Range(-1.6f, 1.6f), 0f);
             }
-            GameObject pickUp = m_PickUpObj;
-            Instantiate(pickUp, position, m_enemyBouncer.transform.rotation);
-            m_spawnPickUp = false;
+            if (Vector2.Distance(position, m_playerInScene.transform.position) > 1)
+            {
+                GameObject pickUp = m_PickUpObj;
+                Instantiate(pickUp, position, m_enemyBouncer.transform.rotation);
+                m_spawnPickUp = false;
+            }
         }
         if(m_playerDead)
         {

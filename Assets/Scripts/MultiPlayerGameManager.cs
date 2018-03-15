@@ -21,11 +21,21 @@ public class MultiPlayerGameManager : MonoBehaviour {
     [SerializeField] private GameObject m_wall0;
     [SerializeField] private GameObject m_wall1;
     [SerializeField] private GameObject m_enemy0;
-    [SerializeField] private GameObject m_seekerEnemy;
     [SerializeField] private GameObject m_PickUpObj;
     [SerializeField] private GameObject m_cameraObj;
 
     [HideInInspector] public bool m_gameOver = false;
+
+
+    //Place Holder
+    [SerializeField] private Sprite m_player1Bubble;
+    [SerializeField] private Sprite m_player2Bubble;
+    [SerializeField] private Sprite m_player3Bubble;
+    [SerializeField] private Sprite m_player4Bubble;
+
+
+    private Vector3 m_enemySpawnPosition;
+    private bool m_spawnEnemy = false;
 
     //Sounds
     [SerializeField] private AudioClip m_DeathSound;
@@ -82,7 +92,27 @@ public class MultiPlayerGameManager : MonoBehaviour {
             player.GetComponent<CharacterMovement>().m_bIsSingleplayer = false;
             player.GetComponent<CharacterMovement>().m_bIsMultiplayer = true;
             player.GetComponent<CharacterMovement>().m_gameManagerMultiplayer = this;
+
+            //Place Holder
+            switch (i)
+            {
+                case 0:
+                    player.GetComponent<SpriteRenderer>().sprite = m_player1Bubble;
+                    break;
+                case 1:
+                    player.GetComponent<SpriteRenderer>().sprite = m_player2Bubble;
+                    break;
+                case 2:
+                    player.GetComponent<SpriteRenderer>().sprite = m_player3Bubble;
+                    break;
+                case 3:
+                    player.GetComponent<SpriteRenderer>().sprite = m_player4Bubble;
+                    break;
+            }
+
             m_players[i] = player;
+
+
             //player.transform.localScale = Vector3.Scale(player.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
             m_scores[i] = 0;
             m_InGameUI[i].gameObject.SetActive(true);
@@ -150,8 +180,8 @@ public class MultiPlayerGameManager : MonoBehaviour {
     private void GenerateWalls(int totalPlayers)
     {
         //Positions depend on size of the background
-        float backgroundWidth = GameObject.Find("Background").GetComponent<Renderer>().bounds.size.x*0.95f; //Make them closer.
-        float backgroundHeight = GameObject.Find("Background").GetComponent<Renderer>().bounds.size.y;
+        float backgroundWidth = 1f; //= GameObject.Find("Background").GetComponent<Renderer>().bounds.size.x*0.95f; //Make them closer.
+        float backgroundHeight = 1f; //= GameObject.Find("Background").GetComponent<Renderer>().bounds.size.y;
         GameObject wall;
         Vector2 position;
 
@@ -159,29 +189,29 @@ public class MultiPlayerGameManager : MonoBehaviour {
         {
             case 2:
                 wall = m_wall0;
-                m_wallSize = new Vector2(2.9f,3.2f);
+                m_wallSize = new Vector2(3f, 1.8f);
 
-                position = new Vector2(-backgroundWidth/4, 0);
+                position = new Vector2(-1.768f, 0); //new Vector2(-backgroundWidth/4, 0);
                 m_wallsPosition[0] = position;
-                Instantiate(wall, position, Quaternion.identity);
+                Instantiate(wall, position, wall.transform.rotation);
 
-                position = new Vector2(backgroundWidth / 4, 0);
+                position = new Vector2(1.789f, 0); //new Vector2(backgroundWidth / 4, 0);
                 m_wallsPosition[1] = position;
-                Instantiate(wall, position, Quaternion.identity);
+                Instantiate(wall, position, wall.transform.rotation);
                 break;
             case 3:
                 wall = m_wall1;
-                m_wallSize = new Vector2(2.54f, 1.3f);
+                m_wallSize = new Vector2(1.59f, 0.86f );
 
-                position = new Vector2(0, backgroundHeight/4);
+                position = new Vector2(0, 0.996f); //new Vector2(0, backgroundHeight/4);
                 m_wallsPosition[0] = position;
                 Instantiate(wall, position, Quaternion.identity);
 
-                position = new Vector2(backgroundWidth / 4, -backgroundHeight / 4);
+                position = new Vector2(1.836f, -1.012f); //new Vector2(backgroundWidth / 4, -backgroundHeight / 4);
                 m_wallsPosition[1] = position;
                 Instantiate(wall, position, Quaternion.identity);
 
-                position = new Vector2(-backgroundWidth / 4, -backgroundHeight/4);
+                position = new Vector2(-1.838f, -1.012f); //new Vector2(-backgroundWidth / 4, -backgroundHeight/4);
                 m_wallsPosition[2] = position;
                 Instantiate(wall, position, Quaternion.identity);
                 break;
@@ -189,19 +219,19 @@ public class MultiPlayerGameManager : MonoBehaviour {
                 wall = m_wall1;
                 m_wallSize = new Vector2(2.54f, 1.3f);
 
-                position = new Vector2(-backgroundWidth / 4, backgroundHeight / 4);
+                position = new Vector2(-1.838f, 0.996f); //new Vector2(-backgroundWidth / 4, backgroundHeight / 4);
                 m_wallsPosition[0] = position;
                 Instantiate(wall, position, Quaternion.identity);
 
-                position = new Vector2(backgroundWidth / 4, backgroundHeight / 4);
+                position = new Vector2(1.836f, 0.996f); //new Vector2(backgroundWidth / 4, backgroundHeight / 4);
                 m_wallsPosition[1] = position;
                 Instantiate(wall, position, Quaternion.identity);
 
-                position = new Vector2(backgroundWidth / 4, -backgroundHeight / 4);
+                position = new Vector2(1.836f, -1.012f); //new Vector2(backgroundWidth / 4, -backgroundHeight / 4);
                 m_wallsPosition[2] = position;
                 Instantiate(wall, position, Quaternion.identity);
 
-                position = new Vector2(-backgroundWidth / 4, -backgroundHeight / 4);
+                position = new Vector2(-1.838f, -1.012f); //new Vector2(-backgroundWidth / 4, -backgroundHeight / 4);
                 m_wallsPosition[3] = position;
                 Instantiate(wall, position, Quaternion.identity);
                 break;
@@ -244,14 +274,18 @@ public class MultiPlayerGameManager : MonoBehaviour {
             }
         }
 
-        Vector3 position = new Vector3(
+            m_enemySpawnPosition = new Vector3(
             m_wallsPosition[otherIndex].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
-            m_wallsPosition[otherIndex].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2),
-            0f
-            );
-        
-        enemy = Instantiate(m_enemy0, position, m_enemy0.transform.rotation);
-        //enemy.transform.localScale = Vector3.Scale(enemy.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
+            m_wallsPosition[otherIndex].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2), 0f);
+
+        while (Vector2.Distance(m_enemySpawnPosition, m_players[otherIndex].transform.position) < 1.5f)
+        {
+            m_enemySpawnPosition = new Vector3(
+            m_wallsPosition[otherIndex].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
+            m_wallsPosition[otherIndex].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2), 0f);
+        }
+
+        enemy = Instantiate(m_enemy0, m_enemySpawnPosition, m_enemy0.transform.rotation);
     }
 
     public float getEntityScale()
@@ -271,7 +305,7 @@ public class MultiPlayerGameManager : MonoBehaviour {
     {
         m_soundEffect.PlayOneShot(m_DeathSound);
         m_totalPlayersRemain--;
-        if(m_totalPlayersRemain == 1)
+        if(m_totalPlayersRemain <= 0)
         {
             m_gameOver = true;
         }

@@ -29,6 +29,7 @@ public class EnemyHasEvolved : MonoBehaviour {
         m_soundEffect.PlayOneShot(m_EvolveSound);
         yield return new WaitForSeconds(2f);
         m_childObject.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.4f);
         Destroy(m_spawnedEvolveParticle);
     }
 }

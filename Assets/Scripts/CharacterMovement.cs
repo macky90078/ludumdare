@@ -9,6 +9,7 @@ public class CharacterMovement : MonoBehaviour {
     [SerializeField] private float m_regMovementDist;
     [SerializeField] private float m_regTimeToDist;
 
+    [SerializeField] private float m_dashCooldown = 2.5f;
     [SerializeField] private float m_dashMovementDist;
     [SerializeField] private float m_dashTimeToDist;
     [SerializeField] private float m_dashInvulnerableTime;
@@ -32,11 +33,14 @@ public class CharacterMovement : MonoBehaviour {
     private bool m_bPlayerMoveInput = false;
     private bool m_bPlayerDashInput = false;
     private bool m_bPlayerdashed = false;
+    private bool m_bDashCooldown = false;
 
     private AudioSource m_soundEffect;
     [SerializeField] private AudioClip m_dashSound;
 
     private Vector3 m_moveDirection;
+
+    public float checkforce;
 
     private GameManager m_gameManager;
     public MultiPlayerGameManager m_gameManagerMultiplayer;
@@ -72,10 +76,21 @@ public class CharacterMovement : MonoBehaviour {
             m_bPlayerMoveInput = false;
         }
 
-        if (InputManager.AButton(m_iPlayerNumber) || Input.GetKeyDown(KeyCode.Space))
+        if ((InputManager.AButton(m_iPlayerNumber) || Input.GetKeyDown(KeyCode.Space)) && !m_bDashCooldown)
         {
             m_bPlayerDashInput = true;
+            m_dashCooldown = 2.5f;
+            m_bDashCooldown = true;
             m_soundEffect.PlayOneShot(m_dashSound);
+        }
+
+        if(m_bDashCooldown)
+        {
+            m_dashCooldown -= Time.deltaTime;
+            if(m_dashCooldown <= 0f)
+            {
+                m_bDashCooldown = false;
+            }
         }
 
     }
@@ -152,16 +167,15 @@ public class CharacterMovement : MonoBehaviour {
         {
             Vector2 m_enemyDist = item.transform.position - transform.position;
 
-            if (item.GetComponent<Rigidbody2D>() && ((item.CompareTag("DasherEnemy") || item.CompareTag("ChaserEnemy"))))
+            if (item.GetComponent<Rigidbody2D>() && (((item.CompareTag("Enemy0") || item.CompareTag("DasherEnemy") || item.CompareTag("ChaserEnemy")))))
             {
-                float pushEnemyForce = CalculateMovementForce(m_pushMovementDist, m_pushTimeToDist, item.attachedRigidbody.velocity.magnitude);
-                item.attachedRigidbody.AddForce((m_enemyDist).normalized * pushEnemyForce);
-            }
-            else if (item.GetComponent<Rigidbody2D>() && ((item.CompareTag("Enemy0"))))
-            {
-                float pushEnemyForce = CalculateMovementForce(m_pushMovementDist, m_pushTimeToDist, item.attachedRigidbody.velocity.magnitude);
-                item.GetComponent<Enemy0>().m_moveDirection = (item.GetComponent<Enemy0>().m_moveDirection * -1);
-                item.attachedRigidbody.AddForce((m_enemyDist).normalized * pushEnemyForce);
+                /*float pushEnemyForce*/
+                checkforce = CalculateMovementForce(m_pushMovementDist, m_pushTimeToDist, item.attachedRigidbody.velocity.magnitude);
+                item.attachedRigidbody.AddForce((m_enemyDist).normalized * checkforce);
+                if(item.GetComponent<Rigidbody2D>() && item.CompareTag("Enemy0"))
+                {
+                    item.GetComponent<Enemy0>().m_moveDirection = (item.GetComponent<Enemy0>().m_moveDirection * -1);
+                }
             }
         }
 
