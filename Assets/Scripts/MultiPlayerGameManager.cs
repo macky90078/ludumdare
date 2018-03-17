@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MultiPlayerGameManager : MonoBehaviour {
 
     public int m_totalPlayers;
-    private int m_totalPlayersRemain;
+    public int m_totalPlayersRemain;
     public int m_testTotalPlayer;
     private GameObject[] m_players;
 
@@ -16,6 +16,9 @@ public class MultiPlayerGameManager : MonoBehaviour {
     private Vector2[] m_wallsPosition;
     private Vector2 m_wallSize;
     public Hashtable m_entityScale;
+
+    public bool busy = false;
+    public int spawnCheckCount = 0;
 
     [SerializeField] private GameObject m_player;
     [SerializeField] private GameObject m_wall0;
@@ -135,6 +138,11 @@ public class MultiPlayerGameManager : MonoBehaviour {
         {
             SceneManager.LoadScene(2, LoadSceneMode.Single);
         }
+        if (Input.GetButtonDown("XboxSelectButton"))
+        {
+            SceneManager.LoadScene(0, LoadSceneMode.Single);
+        }
+
         if (m_gameOver)
         {
             for (int j = 0; j < m_totalPlayers - 1; j++)
@@ -201,7 +209,7 @@ public class MultiPlayerGameManager : MonoBehaviour {
                 break;
             case 3:
                 wall = m_wall1;
-                m_wallSize = new Vector2(1.59f, 0.86f );
+                m_wallSize = new Vector2(2.54f, 1.3f);
 
                 position = new Vector2(0, 0.996f); //new Vector2(0, backgroundHeight/4);
                 m_wallsPosition[0] = position;
@@ -242,12 +250,25 @@ public class MultiPlayerGameManager : MonoBehaviour {
     {
         GameObject pickUp;
 
+        //int otherIndex;
+        //otherIndex = index;
+
         Vector3 position = new Vector3(
             m_wallsPosition[index].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
             m_wallsPosition[index].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2),
             0f
             );
-        
+
+        //if (m_players[otherIndex] != null)
+        //{
+        //    while (Vector2.Distance(position, m_players[otherIndex].transform.position) < 1.5f)
+        //    {
+        //        position = new Vector3(
+        //        m_wallsPosition[index].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
+        //        m_wallsPosition[index].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2), 0f);
+        //    }
+        //}
+
         pickUp = Instantiate(m_PickUpObj, position, Quaternion.identity);
         pickUp.GetComponent<MultiPlayerPointsPickUp>().SetIndex(index);
         pickUp.transform.localScale = Vector3.Scale(pickUp.transform.localScale, new Vector3((float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers], (float)m_entityScale[m_totalPlayers]));
@@ -256,6 +277,7 @@ public class MultiPlayerGameManager : MonoBehaviour {
 
     public void SpawnEnemy(int thisIndex)
     {
+        busy = true;
         GameObject enemy;
 
         int otherIndex;
@@ -278,14 +300,40 @@ public class MultiPlayerGameManager : MonoBehaviour {
             m_wallsPosition[otherIndex].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
             m_wallsPosition[otherIndex].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2), 0f);
 
-        while (Vector2.Distance(m_enemySpawnPosition, m_players[otherIndex].transform.position) < 1.5f)
+        //if (m_players.Length != 0)
+        //{
+        //    foreach (GameObject player in m_players)
+        //    {
+        //        if (Vector2.Distance(m_enemySpawnPosition, player.transform.position) <= 1.5f)
+        //        {
+        //            m_enemySpawnPosition = new Vector3(
+        //            m_wallsPosition[otherIndex].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
+        //            m_wallsPosition[otherIndex].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2), 0f);
+        //        }
+        //    }
+        //}
+
+
+        if (m_players.Length != 0)
         {
-            m_enemySpawnPosition = new Vector3(
-            m_wallsPosition[otherIndex].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
-            m_wallsPosition[otherIndex].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2), 0f);
+            while (Vector2.Distance(m_enemySpawnPosition, m_players[otherIndex].transform.position) <= 1.5f)
+            {
+                m_enemySpawnPosition = new Vector3(
+                m_wallsPosition[otherIndex].x + Random.Range(-m_wallSize.x / 2, m_wallSize.x / 2),
+                m_wallsPosition[otherIndex].y + Random.Range(-m_wallSize.y / 2, m_wallSize.y / 2), 0f);
+                spawnCheckCount++;
+                Debug.Log(spawnCheckCount);
+                if (spawnCheckCount > 100)
+                {
+                    goto breakloops;
+                }
+            }
         }
 
+        breakloops:
         enemy = Instantiate(m_enemy0, m_enemySpawnPosition, m_enemy0.transform.rotation);
+        spawnCheckCount = 0;
+        busy = false;
     }
 
     public float getEntityScale()
@@ -303,7 +351,6 @@ public class MultiPlayerGameManager : MonoBehaviour {
 
     public void PlayerDie(int index)
     {
-        m_soundEffect.PlayOneShot(m_DeathSound);
         m_totalPlayersRemain--;
         if(m_totalPlayersRemain <= 0)
         {

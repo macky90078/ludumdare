@@ -56,13 +56,16 @@ public class Enemy0 : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        for (int i = 0; i < inRange.Length; i++)
+        if (inRange != null)
         {
-            if (collision.gameObject == inRange[i])
+            for (int i = 0; i < inRange.Length; i++)
             {
-                m_evolutionManager.m_bouncersInRange.Clear();
-                m_evolutionManager.m_bouncersInRange.AddRange(inRange);
-                m_evolutionManager.m_bouncerEvolveCount -= 1;
+                if (collision.gameObject == inRange[i])
+                {
+                    m_evolutionManager.m_bouncersInRange.Clear();
+                    m_evolutionManager.m_bouncersInRange.AddRange(inRange);
+                    m_evolutionManager.m_bouncerEvolveCount -= 1;
+                }
             }
         }
     }

@@ -51,14 +51,17 @@ public class SeekerEnemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        for (int i = 0; i < inRange.Length; i++)
+        if (inRange != null)
         {
-            if (collision.gameObject == inRange[i])
+            for (int i = 0; i < inRange.Length; i++)
             {
-                //m_evolutionManager.m_bouncersInRange.Remove(collision.gameObject);
-                m_evolutionManager.m_chasersInRange.Clear();
-                m_evolutionManager.m_chasersInRange.AddRange(inRange);
-                m_evolutionManager.m_chaserEvolveCount -= 1;
+                if (collision.gameObject == inRange[i])
+                {
+                    //m_evolutionManager.m_bouncersInRange.Remove(collision.gameObject);
+                    m_evolutionManager.m_chasersInRange.Clear();
+                    m_evolutionManager.m_chasersInRange.AddRange(inRange);
+                    m_evolutionManager.m_chaserEvolveCount -= 1;
+                }
             }
         }
     }

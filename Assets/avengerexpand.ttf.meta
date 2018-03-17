@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: d296d0c0c9f6ea8458085b23ecf0f21e
+timeCreated: 1521147560
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Avenger Expanded
+  fontNames:
+  - Avenger Expanded
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 2
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

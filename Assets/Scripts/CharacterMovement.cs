@@ -42,7 +42,7 @@ public class CharacterMovement : MonoBehaviour {
 
     public float checkforce;
 
-    private GameManager m_gameManager;
+    public GameManager m_gameManager;
     public MultiPlayerGameManager m_gameManagerMultiplayer;
 
     private Rigidbody2D m_rb;
