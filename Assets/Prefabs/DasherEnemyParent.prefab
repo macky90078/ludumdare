@@ -344,7 +344,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_timeToDist: 0.5
   m_launchCount: 5
+  m_target: {fileID: 0}
   m_spawnSound: {fileID: 8300000, guid: b09332b8ed4af6a44b0e7df406181013, type: 3}
+  m_dashSound: {fileID: 8300000, guid: ed0d0ae198d68e34c99796b80ada2eec, type: 3}
 --- !u!212 &212852718135073108
 SpriteRenderer:
   m_ObjectHideFlags: 1

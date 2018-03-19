@@ -14,6 +14,7 @@ public class DasherEnemy : MonoBehaviour {
 
     private AudioSource m_soundEffect;
     [SerializeField] private AudioClip m_spawnSound;
+    [SerializeField] private AudioClip m_dashSound;
 
     private Rigidbody2D m_rb;
 
@@ -56,6 +57,7 @@ public class DasherEnemy : MonoBehaviour {
         m_force = CalculateMovementForce(m_movementDist, m_timeToDist, m_rb.velocity.magnitude);
         Vector3 dir = m_target.transform.position - transform.position;
         m_rb.AddForce(dir.normalized * m_force, ForceMode2D.Impulse);
+        m_soundEffect.PlayOneShot(m_dashSound);
         m_launchCount = 5f;
     }
 

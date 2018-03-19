@@ -41,9 +41,10 @@ public class MultiPlayerGameManager : MonoBehaviour {
     private bool m_spawnEnemy = false;
 
     //Sounds
-    [SerializeField] private AudioClip m_DeathSound;
     private AudioSource m_music;
     private AudioSource m_soundEffect;
+    [SerializeField] private AudioClip m_DeathSound;
+    [SerializeField] private AudioClip m_pickupSound;
 
     //UI
     [SerializeField] private GameObject[] m_DeathScreenUI;
@@ -180,7 +181,6 @@ public class MultiPlayerGameManager : MonoBehaviour {
 
             
             m_music.Pause();
-            m_soundEffect.PlayOneShot(m_DeathSound);
             m_gameOver = false;
         }
     }
@@ -344,6 +344,8 @@ public class MultiPlayerGameManager : MonoBehaviour {
     public void addScore(int index, int points)
     {
         m_scores[index] += points;
+        m_soundEffect.PlayOneShot(m_pickupSound);
+        m_music.pitch += 0.005f;
 
         int playerID = index + 1;
         m_InGameUI[index].GetComponent<Text>().text = "Player " + playerID + ": " + m_scores[index];
@@ -352,7 +354,8 @@ public class MultiPlayerGameManager : MonoBehaviour {
     public void PlayerDie(int index)
     {
         m_totalPlayersRemain--;
-        if(m_totalPlayersRemain <= 0)
+        m_soundEffect.PlayOneShot(m_DeathSound);
+        if (m_totalPlayersRemain <= 0)
         {
             m_gameOver = true;
         }

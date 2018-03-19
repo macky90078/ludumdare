@@ -22,6 +22,9 @@ public class CharacterMovement : MonoBehaviour {
     public bool m_bIsSingleplayer = true;
 
     [SerializeField] private GameObject m_gDashParticle;
+    [SerializeField] private GameObject m_childSprite;
+
+    private SpriteRenderer m_childSpriteRenderer;
 
     private float m_moveforce;
     private float m_dashForce;
@@ -50,6 +53,7 @@ public class CharacterMovement : MonoBehaviour {
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
+        m_childSpriteRenderer = m_childSprite.GetComponent<SpriteRenderer>();
         m_soundEffect = GetComponent<AudioSource>();
         if (m_bIsSingleplayer)
         {
@@ -74,6 +78,15 @@ public class CharacterMovement : MonoBehaviour {
         else
         {
             m_bPlayerMoveInput = false;
+        }
+
+        if (InputManager.LeftHorizontal(m_iPlayerNumber) > 0)
+        {
+            m_childSpriteRenderer.flipX = false;
+        }
+        else if(InputManager.LeftHorizontal(m_iPlayerNumber) < 0)
+        {
+            m_childSpriteRenderer.flipX = true;
         }
 
         if ((InputManager.AButton(m_iPlayerNumber) || Input.GetKeyDown(KeyCode.Space)) && !m_bDashCooldown)
